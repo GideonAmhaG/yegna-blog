@@ -32,6 +32,7 @@ export default function SignUp() {
       });
       const data = await res.json();
       if (data.success === false) {
+        setLoading(false);
         return setErrorMessage(data.message);
       }
       setLoading(false);
@@ -39,6 +40,7 @@ export default function SignUp() {
         navigate("/sign-in");
       }
     } catch (error) {
+      setLoading(false);
       setErrorMessage(error.message);
     }
   };
