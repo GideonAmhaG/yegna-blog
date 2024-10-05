@@ -10,6 +10,12 @@ import {
 import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import {
+  updateStart,
+  updateSuccess,
+  updateFailure,
+} from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function DashProfile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -22,7 +28,17 @@ export default function DashProfile() {
 
   const [imageUploadError, setImageUploadError] = useState(null);
 
+  const [imageUploading, setImageUploading] = useState(false);
+
+  const [formData, setFormData] = useState({});
+
+  const [userUpdateSuccess, setUserUpdateSuccess] = useState(null);
+
+  const [userUpdateError, setUserUpdateError] = useState(null);
+
   const filePickerRef = useRef(null);
+
+  const dispatch = useDispatch();
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -39,6 +55,7 @@ export default function DashProfile() {
   }, [imageFile]);
 
   const uploadImage = async () => {
+    setImageUploading(true);
     setImageUploadError(null);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
@@ -58,19 +75,61 @@ export default function DashProfile() {
         setImageUploadProgress(null);
         setImageFile(null);
         setImageFileUrl(null);
+        setImageUploading(false);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImageFileUrl(downloadURL);
+          setFormData({ ...formData, profilePicture: downloadURL });
+          setImageUploading(false);
         });
       }
     );
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setUserUpdateError(null);
+    setUserUpdateSuccess(null);
+    if (Object.keys(formData).length === 0) {
+      setUserUpdateError("No changes detected");
+      return;
+    }
+    if (imageUploading) {
+      setUserUpdateError("Image is still uploading");
+      return;
+    }
+    try {
+      dispatch(updateStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(updateFailure(data.message));
+        setUserUpdateError(data.message);
+        return;
+      } else {
+        dispatch(updateSuccess(data));
+        setUserUpdateSuccess("Profile updated successfully");
+      }
+    } catch (error) {
+      dispatch(updateFailure("An error occurred"));
+    }
+  };
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
-      <form className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="file"
           accept="image/*"
@@ -117,14 +176,21 @@ export default function DashProfile() {
           id="username"
           placeholder="Username"
           defaultValue={currentUser.username}
+          onChange={handleChange}
         />
         <TextInput
           type="email"
           id="email"
           placeholder="Email"
           defaultValue={currentUser.email}
+          onChange={handleChange}
         />
-        <TextInput type="password" id="password" placeholder="Password" />
+        <TextInput
+          type="password"
+          id="password"
+          placeholder="Password"
+          onChange={handleChange}
+        />
         <Button type="submit" gradientDuoTone="purpleToBlue" outline>
           Update
         </Button>
@@ -133,6 +199,16 @@ export default function DashProfile() {
         <span className="cursor-pointer">Delete Account</span>
         <span className="cursor-pointer">Sign Out</span>
       </div>
+      {userUpdateSuccess && (
+        <Alert color="success" className="mt-5">
+          {userUpdateSuccess}
+        </Alert>
+      )}
+      {userUpdateError && (
+        <Alert color="failure" className="mt-5">
+          {userUpdateError}
+        </Alert>
+      )}
     </div>
   );
 }
