@@ -10,6 +10,8 @@ export const create = async (req, res, next) => {
     return next(errorHandler(400, "Please fill in all fields"));
   }
 
+  console.log(req.body.image);
+
   const slug = req.body.title
     .toLowerCase()
     .split(" ")

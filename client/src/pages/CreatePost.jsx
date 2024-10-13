@@ -52,7 +52,7 @@ export default function CreatePost() {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setImageUploadProgress(null);
             setImageUploadError(null);
-            setFormData({ ...formData, imageUrl: downloadURL });
+            setFormData({ ...formData, image: downloadURL });
           });
         }
       );
@@ -140,9 +140,9 @@ export default function CreatePost() {
           </Button>
         </div>
         {imageUploadError && <Alert color="failure">{imageUploadError}</Alert>}
-        {formData.imageUrl && (
+        {formData.image && (
           <img
-            src={formData.imageUrl}
+            src={formData.image}
             alt="post"
             className="w-full h-72 object-cover"
           />
