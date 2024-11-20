@@ -22,7 +22,7 @@ export default function CallToAction() {
         </Button>
       </div>
       <div className="p-7 flex-1">
-        <img src="https://st2.depositphotos.com/3591429/5246/i/450/depositphotos_52468025-stock-illustration-people-holding-word-connect.jpg" />
+        <img src="https://t3.ftcdn.net/jpg/04/71/42/88/360_F_471428832_RxdAFS5Cde9nm3BjydNkb41EP7zzRZ3Q.jpg" />
       </div>
     </div>
   );

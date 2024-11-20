@@ -4,7 +4,6 @@ import {
   HiArrowNarrowDown,
   HiArrowNarrowUp,
   HiDocumentText,
-  HiMinus,
   HiOutlineUserGroup,
 } from "react-icons/hi";
 import { useSelector } from "react-redux";
