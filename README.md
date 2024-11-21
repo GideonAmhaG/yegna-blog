@@ -1,6 +1,6 @@
 # Yegna Blog
 
-Yegna Blog is a modern web application built with React and Vite, designed to provide a platform for sharing articles and tutorials on software engineering and web development. The application features user authentication, post creation, commenting, and an admin dashboard for managing content.
+Yegna Blog is a modern MERN (MongoDB, Express, React, Node.js) web application designed for creating and sharing blog posts, tutorials, and articles related to software engineering and web development. The application includes features like user authentication, post creation, commenting, and an admin dashboard for managing content. Built with React and Vite, it offers a responsive and user-friendly experience.
 
 ## Table of Contents
 
