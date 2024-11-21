@@ -51,7 +51,7 @@ To get started with the project, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/yegna-blog.git
+   git clone https://github.com/GideonAmhaG/yegna-blog.git
    ```
 
 2. Navigate to the project directory:
@@ -113,6 +113,10 @@ Contributions are welcome! If you have suggestions for improvements or new featu
    ```
 5. Open a pull request.
 
+## Authors
+
+Gideon Amha Gebremedhin - [Github](https://github.com/GideonAmhaG) | [X](https://x.com/GideonAmha)
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[MIT](https://choosealicense.com/licenses/mit/)
