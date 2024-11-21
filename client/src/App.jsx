@@ -4,7 +4,6 @@ import About from "./pages/About";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
-import Projects from "./pages/Projects";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
@@ -14,6 +13,7 @@ import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
 import Search from "./pages/Search";
+import Connect from "./pages/Connect";
 
 export default function App() {
   return (
@@ -33,7 +33,7 @@ export default function App() {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Route>
-        <Route path="/projects" element={<Projects />} />
+        <Route path="/connect" element={<Connect />} />
         <Route path="/post/:postSlug" element={<PostPage />} />
       </Routes>
       <Footer />
